@@ -23,7 +23,6 @@ namespace WeatherAppTests
             var response = await _httpClient.GetAsync("/weather/stockholm");
 
             await TestHelpers.AssertResponseWithContentAsync(stopwatch, response, expectedStatusCode, expectedContent);
-
         }
     }
 }
