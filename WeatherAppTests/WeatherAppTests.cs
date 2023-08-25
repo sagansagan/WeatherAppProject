@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Diagnostics;
-using System.Net.Http;
+using System.Net;
 using WeatherAppProject;
 
 namespace WeatherAppTests
@@ -8,19 +10,21 @@ namespace WeatherAppTests
     internal record Weather(string City, int Temperature, int Humidity, int Wind);
     public class WeatherAppTests
     {
-        private readonly HttpClient _httpClient = new()
-        {
-            BaseAddress = new Uri("http://localhost:5287")
-        };
+        //private readonly HttpClient _httpClient = new()
+        //{
+        //    BaseAddress = new Uri("https://localhost:7238")
+        //};
 
         [Fact]
         public async Task GetWeather_ReturnsWeatherData()
         {
-            var expectedStatusCode = System.Net.HttpStatusCode.OK;
-            var expectedContent = new Weather("Stockholm", 18, 70, 8);
+            await using var application = new WebApplicationFactory<Program>();
+            using var client = application.CreateClient();
+            var expectedStatusCode = HttpStatusCode.OK;
+            var expectedContent = new Weather("Stockholm", 18, 70, 10);
             var stopwatch = Stopwatch.StartNew();
 
-            var response = await _httpClient.GetAsync("/weather/stockholm");
+            var response = await client.GetAsync("/weather/stockholm");
 
             await TestHelpers.AssertResponseWithContentAsync(stopwatch, response, expectedStatusCode, expectedContent);
         }

@@ -13,6 +13,11 @@ namespace WeatherAppProject
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+            {
+                builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+            }));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -22,17 +27,19 @@ namespace WeatherAppProject
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
+
+            app.UseCors("corsapp");
 
             app.UseAuthorization();
 
-            app.MapGet("/healthcheck", (HttpContext httpContext) =>
-            {
-                throw new NotImplementedException();
-            });
-
+            //app.MapGet("/healthcheck", () =>
+            //{
+            //    throw new NotImplementedException();
+            //});
 
             app.Run();
         }
     }
 }
+public partial class Program { }
