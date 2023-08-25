@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Diagnostics;
@@ -27,6 +28,21 @@ namespace WeatherAppTests
             var response = await client.GetAsync("/weather/stockholm");
 
             await TestHelpers.AssertResponseWithContentAsync(stopwatch, response, expectedStatusCode, expectedContent);
+        }
+
+        [Fact]
+        public async Task HealthCheck_ReturnsOk()
+        {
+            // Arrange
+            await using var application = new WebApplicationFactory<Program>();
+            using var client = application.CreateClient();
+            var stopwatch = Stopwatch.StartNew();
+
+            // Act
+            HttpResponseMessage response = await client.GetAsync("/health");
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
     }
 }

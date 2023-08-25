@@ -1,3 +1,6 @@
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using static System.Net.WebRequestMethods;
+
 namespace WeatherAppProject
 {
     public class Program
@@ -17,6 +20,8 @@ namespace WeatherAppProject
             {
                 builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
             }));
+
+            builder.Services.AddHealthChecks();
 
             var app = builder.Build();
 
@@ -40,13 +45,22 @@ namespace WeatherAppProject
                 Temperature = 18,
                 Humidity = 70,
                 Wind = 10,
-
             };
 
-            //app.MapGet("/healthcheck", () =>
-            //{
-            //    throw new NotImplementedException();
-            //});
+            app.MapGet("/health", async http =>
+            {
+                var healthCheckService = http.RequestServices.GetRequiredService<HealthCheckService>();
+                var healthCheckResult = await healthCheckService.CheckHealthAsync();
+
+                if (healthCheckResult.Status == HealthStatus.Healthy)
+                {
+                    http.Response.StatusCode = StatusCodes.Status200OK;
+                }
+                else
+                {
+                    http.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                }
+            });
 
             app.MapGet("/weather/stockholm", () => Results.Ok(weather));
 
