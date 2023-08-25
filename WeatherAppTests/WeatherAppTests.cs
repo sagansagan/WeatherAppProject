@@ -43,6 +43,7 @@ namespace WeatherAppTests
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
         }
     }
 }

@@ -21,6 +21,7 @@ namespace WeatherAppProject
                 builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
             }));
 
+            //built in healthcheck service
             builder.Services.AddHealthChecks();
 
             var app = builder.Build();
