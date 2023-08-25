@@ -39,7 +39,7 @@ namespace WeatherAppProject
                 City = "Stockholm",
                 Temperature = 18,
                 Humidity = 70,
-                Wind = 8,
+                Wind = 10,
 
             };
 
