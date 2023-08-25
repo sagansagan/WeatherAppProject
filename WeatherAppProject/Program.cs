@@ -33,11 +33,24 @@ namespace WeatherAppProject
 
             app.UseAuthorization();
 
+            var weather = new WeatherForecast
+            {
+
+                City = "Stockholm",
+                Temperature = 18,
+                Humidity = 70,
+                Wind = 8,
+
+            };
+
             //app.MapGet("/healthcheck", () =>
             //{
             //    throw new NotImplementedException();
             //});
 
+            app.MapGet("/weather/stockholm", () => Results.Ok(weather));
+
+ 
             app.Run();
         }
     }
