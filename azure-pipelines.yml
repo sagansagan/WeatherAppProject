@@ -4,7 +4,7 @@ trigger:
 - main
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: mycomputeragent
 
 variables:
   buildConfiguration: 'Release'
