@@ -45,5 +45,13 @@ namespace WeatherAppTests
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
         }
+
+        [Fact]
+        public void CallCounter_WhenCalled_IncreasesByOne()
+        {
+            var callCounter = new Counter();
+            callCounter.Increment();
+            Assert.Equal(1, callCounter.Callcount);
+        }
     }
 }
