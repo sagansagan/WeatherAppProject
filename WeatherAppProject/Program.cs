@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System.Diagnostics.Metrics;
 using static System.Net.WebRequestMethods;
 
 namespace WeatherAppProject
@@ -26,6 +27,8 @@ namespace WeatherAppProject
 
             var app = builder.Build();
 
+            Counter callCounter = new Counter();
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -50,6 +53,7 @@ namespace WeatherAppProject
 
             app.MapGet("/health", async http =>
             {
+                callCounter.Increment();
                 var healthCheckService = http.RequestServices.GetRequiredService<HealthCheckService>();
                 var healthCheckResult = await healthCheckService.CheckHealthAsync();
 
@@ -65,7 +69,14 @@ namespace WeatherAppProject
 
             app.MapGet("/weather/stockholm", () => Results.Ok(weather));
 
- 
+            app.MapGet("/api/calls", async () =>
+            {
+                callCounter.Increment();
+                await Task.Delay(10);
+                return callCounter.Callcount;
+            });
+
+
             app.Run();
         }
     }
