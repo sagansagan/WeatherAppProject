@@ -7,7 +7,7 @@ trigger:
 - none
 
 pool:
-  vmImage: 'Ubuntu-16.04'
+  vmImage: mycomputeragent
 
 variables:
   buildConfiguration: 'Release'
