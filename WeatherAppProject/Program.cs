@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Diagnostics.Metrics;
 using static System.Net.WebRequestMethods;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace WeatherAppProject
 {
@@ -67,7 +68,11 @@ namespace WeatherAppProject
                 }
             });
 
-            app.MapGet("/weather/stockholm", () => Results.Ok(weather));
+            app.MapGet("/weather/stockholm", () =>
+            {
+                callCounter.Increment();
+                return Results.Ok(weather);
+            });
 
             app.MapGet("/api/calls", async () =>
             {
