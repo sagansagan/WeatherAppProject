@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System;
 using System.Diagnostics.Metrics;
 using static System.Net.WebRequestMethods;
 using static System.Reflection.Metadata.BlobBuilder;
@@ -43,14 +44,24 @@ namespace WeatherAppProject
 
             app.UseAuthorization();
 
-            var weather = new WeatherForecast
-            {
-
-                City = "Stockholm",
-                Temperature = 18,
-                Humidity = 70,
-                Wind = 10,
+            WeatherForecast[] cities = {
+            new() { City = "stockholm", Temperature = 18, Humidity = 70, Wind = 10},
+            new() { City = "kiruna"},
+            new() { City = "lund"},
+            new() { City = "copenhagen"},
+            new() { City = "karlstad"}
             };
+            app.MapGet("/weather/{cityName}", async (string cityName) =>
+            {
+                await Task.Delay(10);
+                callCounter.Increment();
+                var city = cities.Where(x => x.City.Equals(cityName.ToLower())).FirstOrDefault();
+                if (city is null)
+                {
+                    return Results.NotFound(new { message = $"Sorry, could not find {cityName}" });
+                }
+                return Results.Ok(city);
+            });
 
             app.MapGet("/health", async http =>
             {
@@ -68,10 +79,10 @@ namespace WeatherAppProject
                 }
             });
 
-            app.MapGet("/weather/stockholm", () =>
+            app.MapGet("/weather", () =>
             {
                 callCounter.Increment();
-                return Results.Ok(weather);
+                return Results.Ok(cities);
             });
 
             app.MapGet("/api/calls", async () =>
@@ -79,6 +90,18 @@ namespace WeatherAppProject
                 callCounter.Increment();
                 await Task.Delay(10);
                 return callCounter.Callcount;
+            });
+
+            app.MapGet("/add/city/{favCity}", (string favCity) =>
+            {
+
+                callCounter.Increment();
+                var city = cities.Where(x => x.City == favCity.ToLower()).FirstOrDefault();
+                if (city is null)
+                {
+                    return Results.NotFound(new { message = "City not found" });
+                }
+                return Results.Ok(new { message = $"You added: {favCity} as your favorite city" });
             });
 
 
