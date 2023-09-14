@@ -79,9 +79,10 @@ namespace WeatherAppProject
                 }
             });
 
-            app.MapGet("/weather", () =>
+            app.MapGet("/weather", async () =>
             {
                 callCounter.Increment();
+                await Task.Delay(10);
                 return Results.Ok(cities);
             });
 
@@ -101,6 +102,7 @@ namespace WeatherAppProject
                 {
                     return Results.NotFound(new { message = "City not found" });
                 }
+                city.IsFav = true;
                 return Results.Ok(new { message = $"You added: {favCity} as your favorite city" });
             });
 

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Net;
+using System.Xml.Linq;
 using WeatherAppProject;
 
 namespace WeatherAppTests
@@ -71,26 +72,25 @@ namespace WeatherAppTests
             HttpResponseMessage response = await client.GetAsync(endpoint);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
+
         [Theory]
         [InlineData("kiruna")]
         [InlineData("copenHagen")]
 
-        public async Task Add_City_Endpoint_Adds_Favorite_When_Requested(string favCity)
+        public async Task Add_City_Endpoint_Returns_Correct_Message_When_Requested(string favCity)
         {
             await using var application = new WebApplicationFactory<Program>();
             using var client = application.CreateClient();
             var stopwatch = Stopwatch.StartNew();
 
-            var expected = JsonConvert.SerializeObject(new { message = $"You added: {favCity} as your favorite city" });
+           var expected = JsonConvert.SerializeObject(new { message = $"You added: {favCity} as your favorite city" });
 
             // Act
             HttpResponseMessage response = await client.GetAsync($"/add/city/{favCity}");
             var actual = await response.Content.ReadAsStringAsync();
 
             // Assert
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual); 
         }
-
-
     }
 }
