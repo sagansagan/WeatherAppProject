@@ -9,5 +9,7 @@ namespace WeatherAppProject
         public int Humidity { get; set; }
 
         public int Wind { get; set; }    
+
+        public bool IsFav { get; set; }
     }
 }
