@@ -15,6 +15,7 @@ The main focus of this project is partly to work test-driven and partly to learn
 <h4>Frontend</h4>
 
 - Javascript (React.js)
+- Styled Components (CSS)
 
 ## The application
 
@@ -24,7 +25,7 @@ The main focus of this project is partly to work test-driven and partly to learn
 ## CI/CD Pipeline
 
 I've implemented Azure Pipelines for continuous integration, automating the testing process and deployment, with jobs running on a self-hosted agent pool.
-The pipeline was defined using the visual designer, which made it much easier for me as I am new to azure devops. With my source code hosted on GitHub, i am able to trigger my pipeline and initiate a job when a commit is made on main.
+The pipeline was defined using the visual designer, which made it much easier for me as I am new to azure DevOps. With my source code hosted on GitHub, i am able to trigger my pipeline and initiate a job when a commit is made on main.
 the following steps define my pipeline:
 
 - Restore
@@ -32,6 +33,7 @@ the following steps define my pipeline:
 - Build
 - Publish
 
-## Workflow
-
+## The TDD workflow
+Throughout the development process, I have followed a TDD approach, trying to ensure code quality, reliability, and maintainability. Within the same solution, there is the main project and the test project. Before adding new functionality in the main project, i've started writing a unit test that described a specific behaviour, then I implemented the code required to make the test pass. If a test failed, i continued to fix the code so that all test passed. 
+This project doesn't contain a lot of code, and the tests don't cover all scenarios, but I definitely got a feel and understanding of the benefits with test-driven development while working on this project.
 
