@@ -39,7 +39,7 @@ export const Temp = styled.h1`
 margin: 0px;
 `;
 
-export const GET_WEATHER_DATA = "https://localhost:7238/weather/stockholm";
+export const GET_WEATHER_DATA = "https://weatherapproject.azurewebsites.net/weather/stockholm";
 
 function Card(props) {
     const { favCity} = props;

@@ -30,8 +30,7 @@ export const ItemList = styled.div`
     background-color: #ddd;
   }
 `;
-
-export const GET_CITIES = "https://localhost:7238/weather";
+export const GET_CITIES = "https://weatherapproject.azurewebsites.net/weather";
 
 function SearchBar () {
   const [input, setInput] = useState('');
@@ -59,7 +58,7 @@ function SearchBar () {
 
 async function addFavorite(favCity) {
   await axios
-    .get(`https://localhost:7238/add/city/${favCity}`)
+    .get(`https://weatherapproject.azurewebsites.net/add/city/${favCity}`)
     .then(() => {
       console.log('Added');
     })
