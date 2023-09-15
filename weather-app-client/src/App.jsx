@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import styled from 'styled-components'
 import Card from './components/Card'
 import SearchBar from './components/SearchBar'
@@ -15,7 +14,7 @@ export const Container = styled.div`
 `;
 
 function App() {
-  //const [count, setCount] = useState(0)
+  
 
   return (
     <>
