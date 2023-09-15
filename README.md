@@ -42,5 +42,5 @@ Throughout the development process, I have followed a TDD approach, trying to en
 This project doesn't contain a lot of code, and the tests don't cover all scenarios, but I definitely got a feel and a deeper understanding of the benefits with test-driven development while working on this project.
 
 ## Demo
-<a>https://youtu.be/4HKK_nTL3Tk</a>
+
 
