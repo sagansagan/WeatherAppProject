@@ -25,7 +25,7 @@ The main focus of this project is partly to work test-driven and partly to learn
 ## CI/CD Pipeline
 
 I've implemented Azure Pipelines for continuous integration, automating the testing process and deployment, with jobs running on a self-hosted agent pool.
-The pipelines was defined using the visual designer, which made it much easier for me as I am new to azure DevOps. With my source code hosted on GitHub, i am able to trigger my pipeline and initiate a job when a commit is made on main. Finally, the release pipeline deploys the application to an azure web app service.
+The pipelines was defined using the visual designer, which made it much easier for me as I am new to azure DevOps. With my source code hosted on GitHub, i am able to trigger my pipeline and initiate a job when a commit is made on main. Finally, the release pipeline is triggered by the new artifact, and deploys the application to an azure web app service.
 the following steps define my pipeline:
 
 - Restore
